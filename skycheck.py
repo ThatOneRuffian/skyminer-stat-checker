@@ -15,14 +15,14 @@ class SkyStats:
         self.decode_public_keys_from_csv()
 
     def fetch_stat_info(self):
-        """Fetch data from the provided datastream url"""
+        """Fetch data from the provided data stream url"""
         print("Fetching URL stat data...")
         page_data = urllib.request.urlopen(self.fetch_url)
         data_string = str(page_data.read(), 'UTF-8')
         json_data = json.loads(data_string)
         print("Restructuring data...")
-        self.cached_web_data = {}  # clear cache
         # restructure data for easier searching
+        self.cached_web_data = {}  # clear cache
         for node_stat in json_data:
             self.cached_web_data[node_stat['key']] = {'uptime': node_stat['uptime'],
                                                       'downtime': node_stat['downtime'],
@@ -48,19 +48,19 @@ class SkyStats:
 
     def get_highest_uptime(self):
         """Return the highest uptime in the data gram"""
-        hightest_uptime = 0
+        highest_uptime = 0
         for node in self.cached_web_data:
             if "uptime" in self.cached_web_data[node]:
                 if self.cached_web_data[node]['uptime'] is not None:
-                    if self.cached_web_data[node]['uptime'] > hightest_uptime:
-                        hightest_uptime = self.cached_web_data[node]['uptime']
-        return hightest_uptime
+                    if self.cached_web_data[node]['uptime'] > highest_uptime:
+                        highest_uptime = self.cached_web_data[node]['uptime']
+        return highest_uptime
 
     def print_node_uptime(self):
         """Function for formatting the stat data output"""
         average_uptime = 0
-        seperator = "=============================================================================="
-        print(seperator)
+        separator = "=============================================================================="
+        print(separator)
         for local_node in self.node_list:
             if local_node in self.cached_web_data:
                 print(local_node, ": ", self.cached_web_data[local_node])
@@ -75,7 +75,7 @@ class SkyStats:
         print(f'Stats found for {total_online}/{total} nodes ({(total_online/total)*100}%)')
         print('Average Up Time Percentage For This Month', average_uptime / total)
         print("Highest uptime documented in data feed: ", self.get_highest_uptime())
-        print(seperator)
+        print(separator)
 
         if len(self.missing_nodes) > 0:
             print("The following nodes were missing from the data feed:")
