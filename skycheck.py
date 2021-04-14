@@ -20,7 +20,6 @@ class SkyStats:
         page_data = urllib.request.urlopen(self.fetch_url)
         data_string = str(page_data.read(), 'UTF-8')
         json_data = json.loads(data_string)
-        print("Restructuring data...")
         # restructure data for easier searching
         self.cached_web_data = {}  # clear cache
         for node_stat in json_data:
@@ -73,7 +72,7 @@ class SkyStats:
         total_online = len(self.node_list) - len(self.missing_nodes)
         total = len(self.node_list)
         print(f'Stats found for {total_online}/{total} nodes ({(total_online/total)*100}%)')
-        print('Average Up Time Percentage For This Month', average_uptime / total)
+        print('Average Up Time Percentage For This Month: ', int(average_uptime / total))
         print("Highest uptime documented in data feed: ", self.get_highest_uptime())
         print(separator)
 
